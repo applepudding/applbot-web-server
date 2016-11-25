@@ -79,8 +79,11 @@ if (isset($_REQUEST["c"]))
 
         <div class="col-lg-6">
           <h4>Misc</h4>
+          <div class="form-group">
+            <input type="text" class="form-control" id="input_myName" placeholder="My Name">
+          </div>
           <div class="form-group form-inline">
-            <label for="input_timer" class="col-form-label">Delay (ms):</label>
+            <label for="input_delay" class="col-form-label">Delay (ms):</label>
             <input type="number" class="form-control" id="input_delay" value="200" min="100">
           </div>
           <div class="form-group">

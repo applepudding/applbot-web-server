@@ -11,6 +11,9 @@ $(document).ready(function () {
     var seconds;
 
     var currentChannel = $('#current_channel').html();
+    var myName = localStorage.getItem("applbot-my-name");
+    $("#input_myName").val(myName);
+
     if ( currentChannel == 0)
     {
         $('#main_display').hide();
@@ -32,6 +35,10 @@ $(document).ready(function () {
             window.location.href = "/applbot";
         }          
     });
+    $("#input_myName").change(function() {
+        localStorage.setItem("applbot-my-name", $("#input_myName").val());
+    });
+
     function populateVoiceList() {
         voices = synth.getVoices();
         var selectedIndex = voiceSelect.selectedIndex < 0 ? 0 : voiceSelect.selectedIndex;
@@ -95,8 +102,10 @@ $(document).ready(function () {
                 if (toSpeak != "")
                 {
                     synth.cancel();
-                    
-                    console.log(toSpeak);
+                    //personalized speak
+                    toSpeak = personalizedSpeak(toSpeak);
+
+                    //console.log(toSpeak);
                     if ((toSpeak.toLowerCase() == "left") || (toSpeak.toLowerCase() == "right"))
                     {
                         toSpeak = reverseLeftRight(obj["msg"], $("#chk_reverseDirection").prop("checked"));
@@ -155,5 +164,23 @@ $(document).ready(function () {
         }
         return string;
         
+    }
+
+    function personalizedSpeak(str)
+    {
+        if(str.includes("@"))
+        {
+            var mainStr = str.split("@");
+            for(i=0;i<mainStr.length;i++)
+            {
+                var subStr = mainStr[i].split(":");
+                if(subStr[0] == myName)
+                {
+                    return subStr[1];
+                }
+            }
+            return "";
+        }
+        return str;
     }
 });
