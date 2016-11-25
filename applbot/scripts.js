@@ -37,6 +37,7 @@ $(document).ready(function () {
     });
     $("#input_myName").change(function() {
         localStorage.setItem("applbot-my-name", $("#input_myName").val());
+        myName = $("#input_myName").val();
     });
 
     function populateVoiceList() {
