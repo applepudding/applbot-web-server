@@ -39,12 +39,11 @@ if (isset($_REQUEST["c"]))
           <li class="nav-item">
             <span class="nav-link active">Channel <span id="current_channel"><?php print $inputChannel; ?></span><span class="sr-only">(current)</span></span>
           </li>
-          <li class="nav-item">
-            <span class="nav-link">--</span>
-          </li>
         </ul>
       </nav>
-      <h3 class="text-muted">ffxiv.act.applbot</h3>
+      <h3 class="text-muted">ffxiv.act.applbot</h3>    
+      <a href="https://github.com/applepudding">Github</a>
+      <a href="https://github.com/applepudding/ffxiv.act.applbot/releases">1.5</a>
     </div>
     <div id="main_channel" style="display:none;">
       <div class="jumbotron">
@@ -57,9 +56,9 @@ if (isset($_REQUEST["c"]))
     </div>
     <main id="main_display" style="display:none;">
       <div class="jumbotron">
-        <p id="debug_outputArea">Ready</p>
+        <p id="debug_outputArea" style="color:blue;">Ready</p>
         <hr>
-        <h1 class="display-3" id="display_eventMain">--</h1><h2 id="display_eventTimer">0</h2>
+        <h1 class="display-4" id="display_eventMain">--</h1><h2 id="display_eventTimer">0</h2>
         <hr>
         <p class="lead" id="display_eventSub">--</p>        
       </div>
