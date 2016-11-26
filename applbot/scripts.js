@@ -123,15 +123,14 @@ $(document).ready(function () {
                     synth.volume = parseFloat(volumeInput.value);
                     synth.rate = 1;
                     synth.pitch = 1;
-                    
                     synth.speak(utterThis);
                 }
                 if (toEventDisplay != "")
                 {
                     var temp_events = toEventDisplay.split("@");
-                    var temp_mainEvents = temp_events[0].split(":");                    
+                    var temp_mainEvents = temp_events[0].split(":");   
                     mainEvent.innerHTML = temp_mainEvents[0];
-                    mainTimer.innerHTML = (temp_mainEvents[1] -1) ;
+                    mainTimer.innerHTML = (temp_mainEvents[1] ) ;
                     seconds =  secondsnow + (temp_mainEvents[1] -1) ;
                     subEvent.innerHTML = temp_events[1];
                 }                
