@@ -37,7 +37,7 @@ if (isset($_REQUEST["c"]))
             <span class="nav-link"><button id="btn_home">Home</a></button>
           </li>
           <li class="nav-item">
-            <span class="nav-link active">Channel <span id="current_channel"><?php print $inputChannel; ?></span><span class="sr-only">(current)</span></span>
+            <span class="nav-link" id="webspeech_status">Channel <span id="current_channel"><?php print $inputChannel; ?></span><span class="sr-only">(current)</span></span>
           </li>
         </ul>
       </nav>
@@ -71,7 +71,7 @@ if (isset($_REQUEST["c"]))
             </select>
           </div>
           <div class="form-group form-inline">
-            <label for="input_volume" class="col-form-label">Volume (not working yet):</label>
+            <label for="input_volume" class="col-form-label">Volume:</label>
             <input type="range" class="form-control" id="input_volume" min="0" max="1" step="0.1" value="0.7">
           </div>
         </div>

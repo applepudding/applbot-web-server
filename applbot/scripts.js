@@ -1,3 +1,16 @@
+/*
+ * Check for browser support
+ */
+var supportMsg = document.getElementById('webspeech_status');
+
+if ('speechSynthesis' in window) {
+	supportMsg.classList.add('active');
+} else {	
+	supportMsg.classList.add('nonactive');
+}
+
+
+
 $(document).ready(function () {
     var synth = window.speechSynthesis;
     
@@ -39,7 +52,7 @@ $(document).ready(function () {
         localStorage.setItem("applbot-my-name", $("#input_myName").val());
         myName = $("#input_myName").val();
     });
-
+/*
     function populateVoiceList() {
         voices = synth.getVoices();
         var selectedIndex = voiceSelect.selectedIndex < 0 ? 0 : voiceSelect.selectedIndex;
@@ -60,6 +73,59 @@ $(document).ready(function () {
     populateVoiceList();
     if (speechSynthesis.onvoiceschanged !== undefined) {
         speechSynthesis.onvoiceschanged = populateVoiceList;
+    }
+*/
+    // Fetch the list of voices and populate the voice options.
+    function loadVoices() {
+    // Fetch the available voices.
+        var voices = speechSynthesis.getVoices();
+    
+    // Loop through each of the voices.
+        voices.forEach(function(voice, i) {
+        // Create a new option element.
+            var option = document.createElement('option');
+        
+        // Set the options value and text.
+            option.value = voice.name;
+            option.innerHTML = voice.name;
+            
+        // Add the option to the voice selector.
+            voiceSelect.appendChild(option);
+        });
+    }
+
+    // Execute loadVoices.
+    loadVoices();
+
+    // Chrome loads voices asynchronously.
+    window.speechSynthesis.onvoiceschanged = function(e) {
+    loadVoices();
+    };
+
+
+    // Create a new utterance for the specified text and add it to
+    // the queue.
+    function speak(text) {
+        window.speechSynthesis.cancel();
+    // Create a new instance of SpeechSynthesisUtterance.
+        var msg = new SpeechSynthesisUtterance();
+    
+    // Set the text.
+        msg.text = text;
+    
+    // Set the attributes.
+        msg.volume = parseFloat(volumeInput.value);
+        msg.rate = 1;
+        msg.pitch = 1;
+    
+    // If a voice has been selected, find the voice and set the
+    // utterance instance's voice attribute.
+        if (voiceSelect.value) {
+            msg.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == voiceSelect.value; })[0];
+        }
+    
+    // Queue this utterance.
+        window.speechSynthesis.speak(msg);
     }
 
     var firstRun = true;
@@ -102,17 +168,16 @@ $(document).ready(function () {
                 var toEventDisplay = obj["event"];
                 if (toSpeak != "")
                 {
-                    synth.cancel();
-                    //personalized speak
                     toSpeak = personalizedSpeak(toSpeak);
-
-                    //console.log(toSpeak);
+                    
                     if ((toSpeak.toLowerCase() == "left") || (toSpeak.toLowerCase() == "right"))
                     {
                         toSpeak = reverseLeftRight(obj["msg"], $("#chk_reverseDirection").prop("checked"));
                     }
                     
-                    $("#debug_outputArea").html(toSpeak);                      
+                    $("#debug_outputArea").html(toSpeak);   
+                    speak(toSpeak);
+                    /*                   
                     var utterThis = new SpeechSynthesisUtterance(toSpeak);
                     var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
                     for(i = 0; i < voices.length ; i++) {
@@ -124,6 +189,7 @@ $(document).ready(function () {
                     synth.rate = 1;
                     synth.pitch = 1;
                     synth.speak(utterThis);
+                    */
                 }
                 if (toEventDisplay != "")
                 {
@@ -168,7 +234,7 @@ $(document).ready(function () {
 
     function personalizedSpeak(str)
     {
-        if(str.includes("@"))
+        if(str.indexOf("@") > -1)
         {
             var mainStr = str.split("@");
             for(i=0;i<mainStr.length;i++)

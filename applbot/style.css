@@ -1,3 +1,7 @@
+.nonactive {
+  background-color: pink;
+}
+
 /* Space out content a bit */
 body {
   padding-top: 1.5rem;
