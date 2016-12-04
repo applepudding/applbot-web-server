@@ -172,7 +172,7 @@ $(document).ready(function () {
                     
                     if ((toSpeak.toLowerCase() == "left") || (toSpeak.toLowerCase() == "right"))
                     {
-                        toSpeak = reverseLeftRight(obj["msg"], $("#chk_reverseDirection").prop("checked"));
+                        toSpeak = reverseLeftRight(toSpeak, $("#chk_reverseDirection").prop("checked"));
                     }
                     
                     $("#debug_outputArea").html(toSpeak);   
